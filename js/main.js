@@ -1,17 +1,5 @@
 $(document).ready(function(){
 
-
-
-  windows.startGame = function (){
-    board : [
-      [null,null,null],
-      [null,null,null],
-      [null,null,null]
-    ],
-  };
-
-
-
   window.game = {
 
     board : [
@@ -52,6 +40,8 @@ $(document).ready(function(){
         ) {
           winner = game.players[player].name
           console.log('THE WINNER IS: ' + winner);
+          alert ('THE WINNER IS: ' + winner);
+          window.youWon();
 
         };
       });
@@ -79,7 +69,6 @@ $(document).ready(function(){
         var col = $(this).attr('column');
         console.log(row + ", " + col);
         game.modifyBoard(player,row,col);
-        $(this).html( game.players[player].token );
         $(this).addClass(game.players[player].image);
 
         if (player ===0 ){
@@ -87,9 +76,24 @@ $(document).ready(function(){
         } else {
           player = 0
         };
-      })
+      });
+
+
+
+      window.youWon = function () {
+        window.game.board = [
+          [null,null,null],
+          [null,null,null],
+          [null,null,null]
+        ];
+        $("td").removeClass( );
+        $("td").addClass("win");
+        window.setTimeout(function () {
+          $("td").removeClass( );
+        }, 2000);
+      };
 
 
 
 
-});   // end of code //
+});  // end of code //

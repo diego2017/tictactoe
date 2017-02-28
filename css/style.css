@@ -58,8 +58,9 @@ td{
   background-color: #f0ea93;
 }
 .win{
-  background-image: url(' ../images/win.jpg');
-  background-repeat:no-repeat;background-size:90%;
+  background-image: url(' ../images/celebration.gif');
+  background-repeat:no-repeat;background-size:100%;
   background-position: center;
-  background-color: #f0ea93;
+  background-color: #4d9598;
+
 }
