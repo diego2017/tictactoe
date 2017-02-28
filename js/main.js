@@ -1,5 +1,12 @@
 $(document).ready(function(){
 
+  $('.selectUser').hide()
+  $('.board').hide();
+  $('.options2').hide();
+
+
+  var usersSelected = 0;
+
   window.game = {
 
     board : [
@@ -11,13 +18,13 @@ $(document).ready(function(){
     players : [
       {
         player: 0,
-        name: 'John',
+        name: 'Player 1',
         token: 'x',
         image: 'one'
       },
       {
         player: 1,
-        name: 'Mary',
+        name: 'Player 2',
         token: 'o',
         image: 'three'
       }
@@ -64,7 +71,7 @@ $(document).ready(function(){
 ////  Events ////
 
       var player = 0 ;
-      $("td").on("click", function(){
+      $('.board td').on("click", function(){
         var row = $(this).attr('row');
         var col = $(this).attr('column');
         console.log(row + ", " + col);
@@ -82,6 +89,7 @@ $(document).ready(function(){
         window.setTimeout(function () {
           $("td").removeClass( );
         }, 2000);
+        usersSelected = 0;
 
       };
 
@@ -96,6 +104,35 @@ $(document).ready(function(){
         $("td").addClass("win");
         window.resetGame();
       };
+
+///////// user selection
+
+    $('#playerPlayer').on("click", function() {
+        $('.selectUser').show();
+        $('.userOptions td').show()
+    });
+
+    $('.userOptions td').on("click", function() {
+        debugger;
+        window.game.players[usersSelected].image =  $(this).attr('class');
+        var name = window.prompt("What is your name? "," ");
+        window.game.players[usersSelected].name = name;
+        $(this).hide();
+
+        usersSelected = usersSelected + 1;
+
+        if (usersSelected >1){  //once both selected
+          $('.selectUser').hide();  //hide options
+          $('.options').hide();
+          $('.options2').show();
+          $('.board').show();
+        }
+    });
+
+    $('#startAgain').click(function() {
+      location.reload();
+    });
+
 
 
 
