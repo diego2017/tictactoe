@@ -1,7 +1,65 @@
+@import url("https://fonts.googleapis.com/css?family=Baloo|Permanent+Marker|Russo+One");
+
+header{
+  background-color: #043967;
+  color: white;
+  font-size: 60px;
+  text-align: center;
+  font-family: 'Baloo', cursive;
+  /*font-family: 'Russo One', sans-serif;*/
+  /*font-family: 'Permanent Marker', cursive;*/
+}
+
 body{
+  background: radial-gradient(ellipse at center, #9E9E9E 0%, rgba(158, 158, 158, 0) 100%);
 
 }
 
+table {
+  margin: 5% auto;
+  border-radius: 15px;
+}
+
+
+
 td{
-  border: 2px black solid;
+  border: 2px #043967 solid;
+  width: 150px;
+  height: 150px;
+  border-radius: 15px 15px 15px 15px;
+  box-shadow: 3px 3px 3px rgba(4, 57, 103, 0.55);
+  background-color: rgba(33, 150, 243, 0.14);
+}
+
+
+
+.one{
+  background-image: url(' ../images/pizza.gif');
+  background-repeat:no-repeat;background-size:90%;
+  background-position: center;
+  background-color: #e07979;
+}
+.two{
+  background-image: url(' ../images/banana.gif');
+  background-repeat:no-repeat;background-size:90%;
+  background-position: center;
+  background-color: #acf0c2;
+}
+.three{
+  background-image: url(' ../images/taco.gif');
+  background-repeat:no-repeat;background-size:90%;
+  background-position: center;
+  background-color: #bbbbea;
+}
+.four{
+  background-image: url(' ../images/ghost.gif');
+  background-repeat:no-repeat;background-size:90%;
+  background-position: center;
+  background-color: #f0ea93;
+}
+.win{
+  background-image: url(' ../images/win.jpg');
+  background-repeat:no-repeat;background-size:90%;
+  background-position: center;
+  background-color: #f0ea93;
 }

@@ -1,5 +1,17 @@
 $(document).ready(function(){
 
+
+
+  windows.startGame = function (){
+    board : [
+      [null,null,null],
+      [null,null,null],
+      [null,null,null]
+    ],
+  };
+
+
+
   window.game = {
 
     board : [
@@ -10,14 +22,16 @@ $(document).ready(function(){
 
     players : [
       {
-        player: 1,
-        name: 'one',
-        token: 'x'
+        player: 0,
+        name: 'John',
+        token: 'x',
+        image: 'one'
       },
       {
-        player: 2,
-        name: 'two',
-        token: 'o'
+        player: 1,
+        name: 'Mary',
+        token: 'o',
+        image: 'three'
       }
     ],
 
@@ -36,15 +50,16 @@ $(document).ready(function(){
             (game.board[0][0]===player) && (game.board[1][1]===player) && (game.board[2][2]===player)||
             (game.board[2][0]===player) && (game.board[1][1]===player) && (game.board[0][2]===player)
         ) {
-          console.log('THE WINNER IS: ' + player);
+          winner = game.players[player].name
+          console.log('THE WINNER IS: ' + winner);
 
         };
       });
     },    //close findWinner
 
-    modifyBoard : function (player, column, row){
-      if (this.board[column][row] === null){
-        this.board[column][row] = player;
+    modifyBoard : function (player, row, column){
+      if (this.board[row][column] === null){
+        this.board[row][column] = player;
       };
       console.log(game.board[0]);
       console.log(game.board[1]);
@@ -53,4 +68,28 @@ $(document).ready(function(){
     }
 
   };  // end of game ////
+
+
+
+////  Event handler ////
+      var player = 0 ;
+
+      $("td").on("click", function(){
+        var row = $(this).attr('row');
+        var col = $(this).attr('column');
+        console.log(row + ", " + col);
+        game.modifyBoard(player,row,col);
+        $(this).html( game.players[player].token );
+        $(this).addClass(game.players[player].image);
+
+        if (player ===0 ){
+          player = 1
+        } else {
+          player = 0
+        };
+      })
+
+
+
+
 });   // end of code //
