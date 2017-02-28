@@ -61,9 +61,9 @@ $(document).ready(function(){
 
 
 
-////  Event handler ////
-      var player = 0 ;
+////  Events ////
 
+      var player = 0 ;
       $("td").on("click", function(){
         var row = $(this).attr('row');
         var col = $(this).attr('column');
@@ -78,6 +78,12 @@ $(document).ready(function(){
         };
       });
 
+      window.resetGame = function (){
+        window.setTimeout(function () {
+          $("td").removeClass( );
+        }, 2000);
+
+      };
 
 
       window.youWon = function () {
@@ -88,11 +94,8 @@ $(document).ready(function(){
         ];
         $("td").removeClass( );
         $("td").addClass("win");
-        window.setTimeout(function () {
-          $("td").removeClass( );
-        }, 2000);
+        window.resetGame();
       };
-
 
 
 

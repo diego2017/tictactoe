@@ -1,13 +1,47 @@
 @import url("https://fonts.googleapis.com/css?family=Baloo|Permanent+Marker|Russo+One");
 
+*{
+  box-sizing: border-box;
+  text-align: center;
+  margin:0;
+  padding: 0;
+  font-family: 'Baloo', cursive;
+}
+
+p{
+  font-size: 2.5em;
+}
+
+button{
+  background-color: #1767a4;
+  color: #FFFFFF;
+  font-size: 1.5em;
+  padding: .5em;
+  margin: 1em;
+}
+
 header{
   background-color: #043967;
   color: white;
   font-size: 60px;
   text-align: center;
-  font-family: 'Baloo', cursive;
+  vertical-align: middle;
+  height: 70px;
   /*font-family: 'Russo One', sans-serif;*/
   /*font-family: 'Permanent Marker', cursive;*/
+}
+
+.headerLine{
+  background-color: rgba(4, 57, 103, 0.43);
+  height: 7px;
+}
+
+.options{
+  padding-top: 10px
+}
+
+.selectUser{
+  background-color: yellow;
 }
 
 body{
@@ -16,7 +50,7 @@ body{
 }
 
 table {
-  margin: 5% auto;
+  margin: 3% auto;
   border-radius: 15px;
 }
 
@@ -26,7 +60,7 @@ td{
   border: 2px #043967 solid;
   width: 150px;
   height: 150px;
-  border-radius: 15px 15px 15px 15px;
+  /*border-radius: 15px 15px 15px 15px;*/
   box-shadow: 3px 3px 3px rgba(4, 57, 103, 0.55);
   background-color: rgba(33, 150, 243, 0.14);
 }
@@ -38,6 +72,7 @@ td{
   background-repeat:no-repeat;background-size:90%;
   background-position: center;
   background-color: #e07979;
+
 }
 .two{
   background-image: url(' ../images/banana.gif');
