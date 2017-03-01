@@ -3,8 +3,9 @@ $(document).ready(function(){
   $('.selectUser').hide()
   $('.board').hide();
   $('.options2').hide();
+  window.activeAi = false;
 
-
+  var aiLevel = 'easy';
   var usersSelected = 0;
 
   window.game = {
@@ -78,11 +79,17 @@ $(document).ready(function(){
         game.modifyBoard(player,row,col);
         $(this).addClass(game.players[player].image);
 
-        if (player ===0 ){
+        if (player === 0 ){
           player = 1
         } else {
           player = 0
+          if (activeAi === true) {
+            window.aI();
         };
+
+
+        }
+
       });
 
       window.resetGame = function (){
@@ -90,7 +97,6 @@ $(document).ready(function(){
           $("td").removeClass( );
         }, 2000);
         usersSelected = 0;
-
       };
 
 
@@ -113,7 +119,7 @@ $(document).ready(function(){
     });
 
     $('.userOptions td').on("click", function() {
-        debugger;
+
         window.game.players[usersSelected].image =  $(this).attr('class');
         var name = window.prompt("What is your name? "," ");
         window.game.players[usersSelected].name = name;
@@ -126,6 +132,9 @@ $(document).ready(function(){
           $('.options').hide();
           $('.options2').show();
           $('.board').show();
+          if (window.activeAi === true){
+            window.aI();
+          };
         }
     });
 
@@ -133,6 +142,38 @@ $(document).ready(function(){
       location.reload();
     });
 
+    $('#playerRobot').click(function() {
+      activeAi = true;
+      $('.selectUser').show();
+      $('.userOptions td').show()
+      window.game.players[0].image =  'robot';
+      window.game.players[0].name = 'Robot';
+      usersSelected = 1;
+
+    });      // btn playerRobot
+
+/// AI section - Robot vs Player
+
+  window.createMove = function(){
+
+    if (aiLevel === 'easy'){
+      var row = (Math.round(Math.random() * 2)).toString();
+      var col = (Math.round(Math.random() * 2)).toString();
+      if (window.game.board[row][col] == null){
+        var selected = row+col;
+        return selected;
+      }else{
+        return createMove();
+      }
+    }          // aiLevel: easy
+  };       // createMove
+
+  window.aI = function (){
+    window.setTimeout(function () {
+      var selection = createMove();
+      $('td#' + selection).trigger( "click" );  // this clicks
+    }, 500);
+  };      // aI
 
 
 

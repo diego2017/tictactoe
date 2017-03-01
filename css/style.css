@@ -41,7 +41,7 @@ header{
 }
 
 .selectUser{
-  background-color: yellow;
+
 }
 
 body{
@@ -97,5 +97,10 @@ td{
   background-repeat:no-repeat;background-size:100%;
   background-position: center;
   background-color: #4d9598;
-
+}
+.robot{
+  background-image: url(' ../images/robot.gif');
+  background-repeat:no-repeat;background-size:100%;
+  background-position: center;
+  background-color: #4d9598;
 }
