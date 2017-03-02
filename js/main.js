@@ -3,10 +3,17 @@ $(document).ready(function(){
   $('.selectUser').hide()
   $('.board').hide();
   $('.options2').hide();
+  $('h2#points').hide();
+  $('h2#round').hide();
   window.activeAi = false;
   var counter = 0;
   var aiLevel = 'hard';
   var usersSelected = 0;
+  window.round = 1;
+  window.winsPlayer0 = 0;
+  window.winsPlayer1 = 0;
+
+  window.gameOver = false;
 
 
   window.player = 0;
@@ -49,10 +56,17 @@ $(document).ready(function(){
             (game.board[2][0]===player) && (game.board[1][1]===player) && (game.board[0][2]===player)
         ) {
           winner = game.players[player].name
+          if (player===0){
+            window.winsPlayer0 +=1;
+          } else {
+            window.winsPlayer1 +=1;
+          };
+          game.players[player].timeWon += 1;
           console.log('THE WINNER IS: ' + winner);
           alert ('THE WINNER IS: ' + winner);
+          console.log('player 1 won: '+ window.winsPlayer0  + ' times. Player 2: ' + window.winsPlayer1  + ' times.');
           window.player = 0;
-          window.youWon();
+          window.gameOver = true;
 
         };
       });
@@ -67,20 +81,28 @@ $(document).ready(function(){
       console.log(game.board[2]);
       this.findWinner();
     }
-
-  };  // end of game ////
+  };  // end of game object ////
 
 
 
 ////  Events ////
 
-      window.player = 0 ;
       $('.board td').on("click", function(){
         var row = $(this).attr('row');
         var col = $(this).attr('column');
         console.log(row + ", " + col);
         game.modifyBoard(player,row,col);
         $(this).addClass(game.players[player].image);
+
+        // var gameOver = game.findWinner();
+
+        if( gameOver ){
+
+          window.youWon(); // also resetGame
+          // debugger;
+
+          return;
+        }
 
       /// delete this, just for testing
         counter = counter + 1;
@@ -93,29 +115,36 @@ $(document).ready(function(){
           window.player = 0
           if (activeAi === true) {
             window.aI();
-        };
-
-
+          }
         }
+
 
       });
 
       window.resetGame = function (){
-        window.setTimeout(function () {
-          $("td").removeClass( );
-        }, 2000);
-        usersSelected = 2;
-        debugger;
-        window.player= 0;
-      };
-
-
-      window.youWon = function () {
         window.game.board = [
           [null,null,null],
           [null,null,null],
           [null,null,null]
         ];
+        window.round += 1;
+        window.setTimeout(function () {
+          $("td").removeClass( );
+          // continue new game
+          if (activeAi === true) {
+            console.log('playing first AI move in new game');
+            window.aI();
+          }
+        }, 2000);
+        window.player= 0;
+        window.gameOver = false;
+        $('h2#round').html('Round ' + window.round)
+        $('h2#points').html(game.players[0].name + ': ' +  window.winsPlayer0 + '  -  ' + game.players[1].name + ': ' + window.winsPlayer1 );
+        // debugger;
+      };
+
+
+      window.youWon = function () {
         $("td").removeClass( );
         $("td").addClass("win");
         window.resetGame();
@@ -128,7 +157,7 @@ $(document).ready(function(){
         $('.userOptions td').show()
     });
 
-    $('.userOptions td').on("click", function() {
+    $('.userOptions td').on("click", function() {    //select players
 
         window.game.players[usersSelected].image =  $(this).attr('class');
         var name = window.prompt("What is your name? "," ");
@@ -142,6 +171,9 @@ $(document).ready(function(){
           $('.options').hide();
           $('.options2').show();
           $('.board').show();
+          $('h2#points').show();
+          $('h2#round').show();
+          $('h2#points').html(game.players[0].name + ': 0  -  ' + game.players[1].name + ': 0');
           if (window.activeAi === true){
             window.aI();
           };
