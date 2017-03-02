@@ -63,9 +63,11 @@ $(document).ready(function(){
             window.winsPlayer1 +=1;
           };
           game.players[player].timeWon += 1;
+          $('#messages').html(winner + ' wins !')
+          window.setTimeout(function () {
+            $('#messages').html('')
+          }, 2000);
           console.log('THE WINNER IS: ' + winner);
-          alert ('THE WINNER IS: ' + winner);
-          console.log('player 1 won: '+ window.winsPlayer0  + ' times. Player 2: ' + window.winsPlayer1  + ' times.');
           window.player = 0;
           window.gameOver = true;
 
@@ -95,42 +97,35 @@ $(document).ready(function(){
         var row = $(this).attr('row');
         var col = $(this).attr('column');
         console.log(row + ", " + col);
-        $(this).addClass(game.players[player].image);
-        game.modifyBoard(player,row,col);
-
-        // var gameOver = game.findWinner();
-
+        // debugger;
+        if (window.game.board[row][col] === null){
+          $(this).addClass(window.game.players[player].image);
+          window.game.modifyBoard(player,row,col);
+          window.counter +=1;
+          console.log(window.counter);
+          if (window.player === 0 ){
+            window.player = 1
+          } else {
+            window.player = 0
+            if (activeAi === true) {
+              window.aI();
+            }
+          }
+        };
         if( gameOver ){
-
           window.youWon(); // also resetGame
-          // debugger;
-
           return;
         };
-
         if( draw ){
           window.draw = false;
-          alert('Draw');
+          $('#messages').html(' Draw ')
+          window.setTimeout(function () {
+            $('#messages').html('')
+          }, 2000);
           resetGame();
           return;
         }
-
-      /// delete this, just for testing
-        window.counter +=1;
-        console.log(window.counter);
-      ///
-
-        if (window.player === 0 ){
-          window.player = 1
-        } else {
-          window.player = 0
-          if (activeAi === true) {
-            window.aI();
-          }
-        }
-
-
-      });
+      });       // closing $('.board td').on("click"...
 
       window.resetGame = function (){
         window.game.board = [
@@ -344,7 +339,7 @@ $(document).ready(function(){
       }
 
       else {
-        alert('moving to easy');
+        console.log('moving to easy mode');
         aiLevel = 'easy';
         return createMove();
       };
