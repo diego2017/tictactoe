@@ -6,7 +6,7 @@ $(document).ready(function(){
   $('h2#points').hide();
   $('h2#round').hide();
   window.activeAi = false;
-  var counter = 0;
+  window.counter = 0;
   var aiLevel = 'hard';
   var usersSelected = 0;
   window.round = 1;
@@ -14,6 +14,7 @@ $(document).ready(function(){
   window.winsPlayer1 = 0;
 
   window.gameOver = false;
+  window.draw = false;
 
 
   window.player = 0;
@@ -68,6 +69,9 @@ $(document).ready(function(){
           window.player = 0;
           window.gameOver = true;
 
+        } else if (counter >7){
+          // debugger;
+          window.draw = true;
         };
       });
     },    //close findWinner
@@ -91,8 +95,8 @@ $(document).ready(function(){
         var row = $(this).attr('row');
         var col = $(this).attr('column');
         console.log(row + ", " + col);
-        game.modifyBoard(player,row,col);
         $(this).addClass(game.players[player].image);
+        game.modifyBoard(player,row,col);
 
         // var gameOver = game.findWinner();
 
@@ -102,11 +106,18 @@ $(document).ready(function(){
           // debugger;
 
           return;
+        };
+
+        if( draw ){
+          window.draw = false;
+          alert('Draw');
+          resetGame();
+          return;
         }
 
       /// delete this, just for testing
-        counter = counter + 1;
-        console.log(counter);
+        window.counter +=1;
+        console.log(window.counter);
       ///
 
         if (window.player === 0 ){
@@ -128,6 +139,7 @@ $(document).ready(function(){
           [null,null,null]
         ];
         window.round += 1;
+        var aiLevel = 'hard';
         window.setTimeout(function () {
           $("td").removeClass( );
           // continue new game
@@ -137,6 +149,7 @@ $(document).ready(function(){
           }
         }, 2000);
         window.player= 0;
+        window.counter=0;
         window.gameOver = false;
         $('h2#round').html('Round ' + window.round)
         $('h2#points').html(game.players[0].name + ': ' +  window.winsPlayer0 + '  -  ' + game.players[1].name + ': ' + window.winsPlayer1 );
@@ -154,7 +167,8 @@ $(document).ready(function(){
 
     $('#playerPlayer').on("click", function() {
         $('.selectUser').show();
-        $('.userOptions td').show()
+        $('.userOptions td').show();
+        $('.options').hide();
     });
 
     $('.userOptions td').on("click", function() {    //select players
@@ -187,6 +201,7 @@ $(document).ready(function(){
     $('#playerRobot').click(function() {
       activeAi = true;
       $('.selectUser').show();
+      $('.options').hide();
       $('.userOptions td').show()
       window.game.players[0].image =  'robot';
       window.game.players[0].name = 'Robot';
@@ -210,6 +225,7 @@ $(document).ready(function(){
     //
     if (aiLevel === 'hard'){
       var boardSummary = window.game.board.toString();
+      // debugger;
       if (boardSummary === ",,,,,,,,"){
         $('td#00').trigger( "click" );
       }
@@ -250,11 +266,53 @@ $(document).ready(function(){
                 ((game.board[0][0] === 0 )&&(game.board[1][1] === 0 )&&(game.board[2][2]===null)) ){
         $('td#22').trigger( "click" );
       }
+    //// to prevent player wins
+      else if ( ((game.board[0][0] === 1 )&&(game.board[0][2] === 1 )&&(game.board[0][1]===null)) ||
+                ((game.board[1][1] === 1 )&&(game.board[2][1] === 1 )&&(game.board[0][1]===null)) ){
+        $('td#01').trigger( "click" );
+      }
+      else if ( ((game.board[0][0] === 1 )&&(game.board[0][1] === 1 )&&(game.board[0][2]===null)) ||
+                ((game.board[1][2] === 1 )&&(game.board[2][2] === 1 )&&(game.board[0][2]===null)) ||
+                ((game.board[2][0] === 1 )&&(game.board[1][1] === 1 )&&(game.board[0][2]===null)) ){
+        $('td#02').trigger( "click" );
+      }
+      else if ( ((game.board[0][0] === 1 )&&(game.board[2][0] === 1 )&&(game.board[1][0]===null)) ||
+                ((game.board[1][1] === 1 )&&(game.board[1][2] === 1 )&&(game.board[1][0]===null)) ){
+        $('td#10').trigger( "click" );
+      }
+      else if ( ((game.board[1][0] === 1 )&&(game.board[1][2] === 1 )&&(game.board[1][1]===null)) ||
+                ((game.board[0][1] === 1 )&&(game.board[2][1] === 1 )&&(game.board[1][1]===null)) ||
+                ((game.board[2][0] === 1 )&&(game.board[0][2] === 1 )&&(game.board[1][1]===null)) ||
+                ((game.board[0][2] === 1 )&&(game.board[2][2] === 1 )&&(game.board[1][1]===null)) ){
+        $('td#11').trigger( "click" );
+      }
+      else if ( ((game.board[0][2] === 1 )&&(game.board[2][2] === 1 )&&(game.board[1][2]===null)) ||
+                ((game.board[1][0] === 1 )&&(game.board[1][1] === 1 )&&(game.board[1][2]===null)) ){
+        $('td#12').trigger( "click" );
+      }
+      else if ( ((game.board[0][0] === 1 )&&(game.board[1][0] === 1 )&&(game.board[2][0]===null)) ||
+                ((game.board[2][1] === 1 )&&(game.board[2][2] === 1 )&&(game.board[2][0]===null)) ||
+                ((game.board[0][2] === 1 )&&(game.board[1][1] === 1 )&&(game.board[2][0]===null)) ){
+        $('td#20').trigger( "click" );
+      }
+      else if ( ((game.board[2][0] === 1 )&&(game.board[2][2] === 1 )&&(game.board[2][1]===null)) ||
+                ((game.board[0][1] === 1 )&&(game.board[1][1] === 1 )&&(game.board[2][1]===null)) ){
+        $('td#21').trigger( "click" );
+      }
+      else if ( ((game.board[2][0] === 1 )&&(game.board[2][1] === 1 )&&(game.board[2][2]===null)) ||
+                ((game.board[0][2] === 1 )&&(game.board[0][1] === 1 )&&(game.board[2][2]===null)) ||
+                ((game.board[0][0] === 1 )&&(game.board[1][1] === 1 )&&(game.board[2][2]===null)) ){
+        $('td#22').trigger( "click" );
+      }
+      ////////
       else if ( (boardSummary === "0,1,,,,,,,") ||
                 (boardSummary === "0,,,1,,,,,") ||
                 (boardSummary === "0,,,,,1,,,") ||
                 (boardSummary === "0,,,,,,,1,") ){
         $('td#11').trigger( "click" );
+      }
+      else if ( (boardSummary === "0,,,,1,,,1,0")){
+        $('td#02').trigger( "click" );
       }
       else if ( (boardSummary === "0,1,,,0,,,,1") ||
                 (boardSummary === "0,,,1,0,,,,1") ||
@@ -284,7 +342,9 @@ $(document).ready(function(){
       else if ( (boardSummary === "0,,,,1,,1,,0")){
         $('td#02').trigger( "click" );
       }
+
       else {
+        alert('moving to easy');
         aiLevel = 'easy';
         return createMove();
       };
